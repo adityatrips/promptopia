@@ -3,7 +3,7 @@
 import LoadingComponent from '@/components/LoadingComponent';
 import PromptCard from '@/components/PromptCard';
 import { useSearchParams } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const TagPosts = () => {
 	const searchParams = useSearchParams();
@@ -32,20 +32,18 @@ const TagPosts = () => {
 	return loading ? (
 		<LoadingComponent />
 	) : (
-		<Suspense fallback={<LoadingComponent />}>
-			<div className='max-w-2xl w-full'>
-				<h1 className='head_text text-left mb-5'>
-					<span className='blue_gradient'>#{tagname}</span>
-				</h1>
-				<div className='prompt_layout'>
-					{prompts.map((prompt) => (
-						<div className='w-full'>
-							<PromptCard prompt={prompt} />
-						</div>
-					))}
-				</div>
+		<div className='max-w-2xl w-full'>
+			<h1 className='head_text text-left mb-5'>
+				<span className='blue_gradient'>#{tagname}</span>
+			</h1>
+			<div className='prompt_layout'>
+				{prompts.map((prompt) => (
+					<div className='w-full'>
+						<PromptCard prompt={prompt} />
+					</div>
+				))}
 			</div>
-		</Suspense>
+		</div>
 	);
 };
 

@@ -1,5 +1,6 @@
 'use client';
 
+import LoadingComponent from '@/components/LoadingComponent';
 import PromptCard from '@/components/PromptCard';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -9,6 +10,7 @@ const TagPosts = () => {
 	const tagname = searchParams.get('tagname');
 
 	const [prompts, setPrompts] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchTagPrompts = async () => {
@@ -19,18 +21,22 @@ const TagPosts = () => {
 				setPrompts(data);
 			} catch (error) {
 				console.error(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 
 		if (tagname) fetchTagPrompts();
 	}, []);
 
-	return (
+	return loading ? (
+		<LoadingComponent />
+	) : (
 		<div className='max-w-2xl w-full'>
 			<h1 className='head_text text-left mb-5'>
 				<span className='blue_gradient'>#{tagname}</span>
 			</h1>
-			<div className='grid grid-cols-1 gap-5'>
+			<div className='prompt_layout'>
 				{prompts.map((prompt) => (
 					<div className='w-full'>
 						<PromptCard prompt={prompt} />

@@ -5,11 +5,13 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 import Profile from '@/components/Profile';
+import LoadingComponent from '@/components/LoadingComponent';
 
 const MyProfile = () => {
 	const [posts, setPosts] = useState([]);
 	const { data: session } = useSession();
 	const router = useRouter();
+	const [loading, setLoading] = useState(true);
 
 	const handleEdit = (post) => {
 		router.push(`/update-prompt?id=${post._id}`);
@@ -39,12 +41,15 @@ const MyProfile = () => {
 			const response = await fetch(`/api/users/${session?.user.id}/posts`);
 			const data = await response.json();
 			setPosts(data);
+			setLoading(false);
 		};
 
 		if (session?.user.id) fetchPosts();
 	}, []);
 
-	return (
+	return loading ? (
+		<LoadingComponent />
+	) : (
 		<Profile
 			name={'My'}
 			desc='Welcome to your personalized space'

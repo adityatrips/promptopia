@@ -1,7 +1,8 @@
 'use client';
 
+import LoadingComponent from './LoadingComponent';
 import PromptCard from './PromptCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 
 const PromptCardList = ({ data }) => {
 	return (
@@ -19,11 +20,13 @@ const PromptCardList = ({ data }) => {
 const Feed = () => {
 	const [searchText, setSearchText] = useState('');
 	const [posts, setPosts] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	const fetchPosts = async () => {
 		const response = await fetch('/api/prompt');
 		const data = await response.json();
 		setPosts(data);
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -52,7 +55,9 @@ const Feed = () => {
 		setSearchText(e.target.value);
 	};
 
-	return (
+	return loading ? (
+		<LoadingComponent />
+	) : (
 		<section className='feed'>
 			<form className='relative w-full flex-center'>
 				<input

@@ -6,6 +6,8 @@ import '@/styles/globals.css';
 export const metadata = {
 	title: 'Promptopia',
 	description: 'Promptopia is a platform for sharing prompts.',
+	author: 'Aditya Tripathi',
+	tags: ['prompt', 'writing', 'sharing', 'community'],
 };
 
 const RootLayout = ({ children }) => {

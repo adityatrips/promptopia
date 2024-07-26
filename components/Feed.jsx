@@ -2,7 +2,7 @@
 
 import LoadingComponent from './LoadingComponent';
 import PromptCard from './PromptCard';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 
 const PromptCardList = ({ data }) => {
 	return (
